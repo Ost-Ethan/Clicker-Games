@@ -13,3 +13,14 @@
 insert into "users" ("username", "password")
 values
     ('Admin', 'password');
+
+insert into "games" ("gameName")
+  values
+      ('SpeedClicker');
+insert into "games" ("gameName")
+  values
+      ('QuickDraw');
+
+insert into "times" ("userId", "gameId", "bestTime")
+  values
+      (1, 1, 1334);

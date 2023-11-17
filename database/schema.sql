@@ -10,7 +10,7 @@ CREATE TABLE "users" (
   "userId" serial PRIMARY KEY,
   "username" text UNIQUE,
   "password" text,
-  "createdAt" timestamptz
+  "createdAt" timestamptz(6) not null default now()
 );
 
 CREATE TABLE "times" (
