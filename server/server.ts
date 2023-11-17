@@ -3,8 +3,19 @@ import 'dotenv/config';
 import express from 'express';
 import pg from 'pg';
 import { ClientError, authMiddleware, errorMiddleware } from './lib/index.js';
-import { time } from 'node:console';
-import { nextTick } from 'node:process';
+import argon2 from 'argon2';
+import jwt from 'jsonwebtoken';
+
+type Auth = {
+  username: string;
+  inputPassword: string;
+};
+
+type User = {
+  userId: number;
+  username: string;
+  password: string;
+};
 
 const connectionString =
   process.env.DATABASE_URL ||
@@ -15,6 +26,9 @@ const db = new pg.Pool({
     rejectUnauthorized: false,
   },
 });
+
+const hashKey = process.env.TOKEN_SECRET;
+if (!hashKey) throw new Error('TOKEN_SECRET not found in .env');
 
 const app = express();
 
@@ -38,8 +52,7 @@ app.get('/api/times/:gameId', async (req, res, next) => {
     const sql = `
   select *
     from "times"
-    where "gameId" = $1
-  join "users" using ("userId");
+    where "gameId" = $1;
   `;
     const params = [gameId];
     const result = await db.query(sql, params);
@@ -51,7 +64,7 @@ app.get('/api/times/:gameId', async (req, res, next) => {
 });
 
 // Post a new time to the list. This is for posting the first time for an account.
-app.post('/api/times', async (req, res, next) => {
+app.post('/api/times', authMiddleware, async (req, res, next) => {
   try {
     const { userId, gameId, bestTime } = req.body;
     const sql = `
@@ -69,7 +82,7 @@ app.post('/api/times', async (req, res, next) => {
 });
 
 // updates a user's time entry if they have gotten a time that is better than their best time.
-app.put('/api/times', async (req, res, next) => {
+app.put('/api/times', authMiddleware, async (req, res, next) => {
   try {
     const { userId, gameId, bestTime } = req.body;
     const sql = `
@@ -104,18 +117,53 @@ app.get('/api/users', async (req, res, next) => {
 });
 
 // Add a new user to the users table
-app.post('/api/users', async (req, res, next) => {
+app.post('/api/user/sign-up', async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { username, inputPassword } = req.body as Partial<Auth>;
+    if (!username || !inputPassword) {
+      throw new ClientError(400, 'username and password are required fields');
+    }
+    const hashedPassword = await argon2.hash(inputPassword);
+
     const sql = `
   insert into "users" ("username", "password")
     values ($1, $2)
     returning * ;`;
-    const params = [username, password];
+    const params = [username, hashedPassword];
 
     const result = await db.query(sql, params);
     const newUser = result.rows;
-    res.json(newUser);
+    res.status(201).json(newUser);
+  } catch (err) {
+    next(err);
+  }
+});
+// user Sign in request
+app.post('/api/users/sign-in', async (req, res, next) => {
+  try {
+    const { username, inputPassword } = req.body as Partial<Auth>;
+    if (!username || !inputPassword) {
+      throw new ClientError(401, 'invalid login');
+    }
+    const sql = `
+    select "userId",
+           "password"
+      from "users"
+     where "username" = $1
+  `;
+    const params = [username];
+    const result = await db.query<User>(sql, params);
+    const [user] = result.rows;
+    if (!user) {
+      throw new ClientError(401, 'invalid login');
+    }
+    const { userId, password } = user;
+    if (!(await argon2.verify(password, inputPassword))) {
+      throw new ClientError(401, 'invalid login');
+    }
+    const payload = { userId, username };
+    const token = jwt.sign(payload, hashKey);
+    res.json({ token, user: payload });
   } catch (err) {
     next(err);
   }
