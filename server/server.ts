@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars -- Remove when used */
 import 'dotenv/config';
 import express from 'express';
-import pg from 'pg';
+import pg, { Client } from 'pg';
 import { ClientError, authMiddleware, errorMiddleware } from './lib/index.js';
 import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
@@ -49,6 +49,9 @@ app.get('/api/hello', (req, res) => {
 app.get('/api/times/:gameId', async (req, res, next) => {
   try {
     const { gameId } = req.params;
+    if (!gameId) {
+      throw new ClientError(401, 'A valid gameId is required');
+    }
     const sql = `
   select *
     from "times"
@@ -56,6 +59,9 @@ app.get('/api/times/:gameId', async (req, res, next) => {
   `;
     const params = [gameId];
     const result = await db.query(sql, params);
+    if (!result) {
+      throw new ClientError(500, 'An unexpected error has occured.');
+    }
     const scores = result.rows;
     res.json(scores);
   } catch (err) {
@@ -63,10 +69,16 @@ app.get('/api/times/:gameId', async (req, res, next) => {
   }
 });
 
-// Post a new time to the list. This is for posting the first time for an account.
+// Post a new time to the list. This could be used for posting the first time for an user.
 app.post('/api/times', authMiddleware, async (req, res, next) => {
   try {
     const { userId, gameId, bestTime } = req.body;
+    if (!userId || !gameId || !bestTime) {
+      throw new ClientError(
+        401,
+        'A userId, gameId, and bestTime are required.'
+      );
+    }
     const sql = `
   insert into "times" ("userId", "gameId", "bestTime")
     values ($1, $2, $3)
@@ -94,6 +106,9 @@ app.put('/api/times', authMiddleware, async (req, res, next) => {
     const params = [userId, gameId, bestTime];
 
     const result = await db.query(sql, params);
+    if (!result) {
+      throw new ClientError(500, 'There was an issue updating your score.');
+    }
     const newTime = result.rows;
     res.json(newTime);
   } catch (err) {
@@ -101,7 +116,7 @@ app.put('/api/times', authMiddleware, async (req, res, next) => {
   }
 });
 
-// get all users from the users table, for testing purposes
+// get all users from the users table, for testing purposes only.
 app.get('/api/users', async (req, res, next) => {
   try {
     const sql = `
@@ -111,6 +126,25 @@ app.get('/api/users', async (req, res, next) => {
     const result = await db.query(sql);
     const scores = result.rows;
     res.json(scores);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// This endpoint calls all scores for the current user when displaying them on the profile page. Unfinshed currently.
+app.get('/api/user/:username', async (req, res, next) => {
+  try {
+    const { username } = req.params;
+    if (!username) {
+      throw new ClientError(500, 'Username not found.');
+    }
+    const sql = `
+  select *
+    from "users";
+  `;
+    const result = await db.query(sql);
+    const userScores = result.rows;
+    res.json(userScores);
   } catch (err) {
     next(err);
   }

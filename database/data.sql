@@ -12,7 +12,7 @@
 
 insert into "users" ("username", "password")
 values
-    ('Admin', 'password');
+    ('Admin2', '$argon2id$v=19$m=4096,t=3,p=1$2pmN99IiEUzA9yxzhUBhiA$OemaFRk2kDMzkAnrCBXJNM4z3ghIdWUTaUw0iytYm48');
 
 insert into "games" ("gameName")
   values
