@@ -13,7 +13,6 @@ export default function App() {
         <Route path="Home" element={<HomePage />} />
         <Route path="Profile" />
         <Route path="UserLogin" />
-        {/* <Route path="*" element={<NotFound />} /> */}
       </Route>
     </Routes>
   );

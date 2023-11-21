@@ -9,6 +9,8 @@ export default {
       greenHead: '#A6F2A9',
       redHead: '#F2A6A6',
       greenSclick: '#4EF45E',
+      orangeScoreboard: '#FFBC58',
+      blueScoreboard: '#7F84FF',
     },
     extend: {},
   },
