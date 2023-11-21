@@ -47,7 +47,7 @@ export function SpeedClicker() {
         <p>Passed Seconds: {passedMilliseconds / 100}</p>
         <button
           onClick={() => setTimesClicked((prev) => prev + 1)}
-          className="mt-56 w-60 h-60 bg-greenHead rounded-full self-center"></button>
+          className="mt-56 w-60 h-60 bg-greenSclick rounded-full self-center active:bg-greenHead"></button>
       </div>
     );
   }

@@ -20,12 +20,12 @@ export function Results({
               setIsStarted(false);
               setPassedMilliseconds(0);
             }}
-            className="p-2 m-2 bg-greenHead">
+            className="p-2 m-2 bg-greenHead rounded-lg">
             Play Again!
           </button>
         </div>
         <div className="basis-1/2">
-          <button className="p-2 m-2 bg-yellowHead">
+          <button className="p-2 m-2 bg-yellowHead rounded-lg">
             <Link to="/home">Home Page</Link>
           </button>
         </div>
