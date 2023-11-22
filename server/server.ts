@@ -55,6 +55,7 @@ app.get('/api/times/:gameId', async (req, res, next) => {
     const sql = `
   select *
     from "times"
+    join "users" using ("userId")
     where "gameId" = $1;
   `;
     const params = [gameId];

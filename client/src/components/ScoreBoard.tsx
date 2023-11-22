@@ -1,23 +1,31 @@
-export function ScoreBoard({ game }) {
-  // async function getTimes(){
-  //   try {
-  //     const res = await fetch('/api/times/1');
-  //     if (!res.ok) {
-  //       throw new Error(res.status);
-  //     }
-  //     const parsedInfo = await res.json()
-  //     parsedInfo.map((element, index) =>{
-  //       return(
-  //         <div>
-  //         </div>
-  //       )
-  //     } )
+import { useEffect, useState } from 'react';
+import { ScoreboardEntries } from './ScoreboardEntries';
 
-  //     return parsedInfo;
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
+export function ScoreBoard({ game, gameId }) {
+  const [scoreboardTimes, setScoreboardTimes] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function getTimes() {
+      try {
+        const res = await fetch(`/api/times/${gameId}`);
+        if (!res.ok) {
+          throw new Error(`${res.status}`);
+        }
+        const parsedInfo = await res.json();
+        setScoreboardTimes(parsedInfo);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err);
+        setIsLoading(false);
+      }
+    }
+    getTimes();
+  }, [gameId]);
+
+  if (isLoading) {
+    return <div>Loading Scoreboard...</div>;
+  }
 
   return (
     <>
@@ -35,42 +43,7 @@ export function ScoreBoard({ game }) {
           <div className="border-solid border-b-2 px-2 basis-3/6  flex justify-center">
             Time
           </div>
-          <div className="ENTRY max-w-full bg-orangeScoreboard flex justify-between basis-full m-2 my-0.5 p-2 px-4 rounded-full">
-            <div className="basis-1/6">1</div>
-            <div className="basis-2/6 flex flex-wrap break-all justify-center align-middle text-center content-center">
-              Billy123
-            </div>
-            <div className="basis-3/6 flex justify-center content-center">
-              6.23 Seconds
-            </div>
-          </div>
-          <div className="ENTRY max-w-full bg-orangeScoreboard flex justify-between basis-full m-2 my-0.5 p-2 px-4 rounded-full">
-            <div className="basis-1/6">1</div>
-            <div className="basis-2/6 flex flex-wrap break-all justify-center align-middle text-center content-center">
-              Billy123
-            </div>
-            <div className="basis-3/6 flex justify-center content-center">
-              6.23 Seconds
-            </div>
-          </div>
-          <div className="ENTRY max-w-full bg-orangeScoreboard flex justify-between basis-full m-2 my-0.5 p-2 px-4 rounded-full">
-            <div className="basis-1/6">1</div>
-            <div className="basis-2/6 flex flex-wrap break-all justify-center align-middle text-center content-center">
-              Billy123
-            </div>
-            <div className="basis-3/6 flex justify-center content-center">
-              6.23 Seconds
-            </div>
-          </div>
-          <div className="ENTRY max-w-full bg-orangeScoreboard flex justify-between basis-full m-2 my-0.5 p-2 px-4 rounded-full">
-            <div className="basis-1/6">1</div>
-            <div className="basis-2/6 flex flex-wrap break-all justify-center align-middle text-center content-center">
-              Billy123
-            </div>
-            <div className="basis-3/6 flex justify-center content-center">
-              6.23 Seconds
-            </div>
-          </div>
+          <ScoreboardEntries scoreboardTimes={scoreboardTimes} />
         </div>
       </div>
     </>

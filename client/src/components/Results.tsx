@@ -14,7 +14,7 @@ export function Results({
         <div className="basis-full mb-20 text-2xl italic">
           {time / 100} seconds!
         </div>
-        <div>
+        <div className="basis-full">
           <button
             onClick={() => {
               setTimesClicked(0);
@@ -24,15 +24,16 @@ export function Results({
             className="py-6 px-4 m-2 bg-greenHead rounded-lg">
             Play Again!
           </button>
-        </div>
-        <div>
           <button className="py-6 px-4 m-2 bg-yellowHead rounded-lg">
             <Link to="/home">Home Page</Link>
           </button>
         </div>
+        <div className="text-center mt-20 max-w-xs">
+          Log in to see your best score and compete on the leaderboard!
+        </div>
       </div>
       <div className=" justify-center flex">
-        <ScoreBoard game="SpeedClicker" />
+        <ScoreBoard gameId="1" game="Speed Clicker" />
       </div>
     </div>
   );
