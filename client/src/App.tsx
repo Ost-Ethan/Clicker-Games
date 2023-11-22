@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { SpeedClicker } from './pages/SpeedClicker';
 import { HomePage } from './pages/HomePage';
+import { UserLogin } from './pages/UserLogin';
 
 export default function App() {
   return (
@@ -12,7 +13,7 @@ export default function App() {
         <Route path="Results" />
         <Route path="Home" element={<HomePage />} />
         <Route path="Profile" />
-        <Route path="UserLogin" />
+        <Route path="UserLogin" element={<UserLogin />} />
       </Route>
     </Routes>
   );

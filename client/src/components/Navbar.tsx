@@ -31,6 +31,16 @@ export function Navbar() {
           </div>
         </div>
       </div>
+      <div className="LOG-IN-BUTTON basis-full flex justify-end mx-2 my-0.5">
+        <Link to={`UserLogin`}>
+          <button className="p-4 px-20 bg-yellowLogin rounded-full">
+            Sign In
+          </button>
+        </Link>
+      </div>
+      <div className="basis-full flex justify-end mx-4 my-0.5">
+        <p>Log in to save your scores!</p>
+      </div>
       <Outlet />
     </div>
   );

@@ -11,6 +11,7 @@ export default {
       greenSclick: '#4EF45E',
       orangeScoreboard: '#FFBC58',
       blueScoreboard: '#7F84FF',
+      yellowLogin: '#FFF84C',
     },
     extend: {},
   },
