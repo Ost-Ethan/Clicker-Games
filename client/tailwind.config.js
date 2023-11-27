@@ -12,6 +12,7 @@ export default {
       orangeScoreboard: '#FFBC58',
       blueScoreboard: '#7F84FF',
       yellowLogin: '#FFF84C',
+      grayLogin: '#D9D9D9',
     },
     extend: {},
   },

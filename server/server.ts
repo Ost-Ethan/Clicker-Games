@@ -152,7 +152,7 @@ app.get('/api/user/:username', async (req, res, next) => {
 });
 
 // Add a new user to the users table
-app.post('/api/user/sign-up', async (req, res, next) => {
+app.post('/api/users/sign-up', async (req, res, next) => {
   try {
     const { username, inputPassword } = req.body as Partial<Auth>;
     if (!username || !inputPassword) {
