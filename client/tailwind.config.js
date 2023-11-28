@@ -15,7 +15,11 @@ export default {
       grayLogin: '#D9D9D9',
       redLogOut: '#FF0000',
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        Arimo: ['Arimo', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 };

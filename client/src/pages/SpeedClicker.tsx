@@ -26,7 +26,7 @@ export function SpeedClicker({ loggedIn }) {
 
   if (isStarted === false) {
     return (
-      <div className="flex flex-col justfiy-center items-center flex-wrap">
+      <div className="font-Arimo flex flex-col justfiy-center items-center flex-wrap">
         <h1 className="m-6">Speed Clicker!</h1>
         <p className="m-0.25">Instructions:</p>
         <p>Click the button 10 times as fast as you can!</p>
@@ -42,7 +42,7 @@ export function SpeedClicker({ loggedIn }) {
     );
   } else {
     return (
-      <div className="flex flex-col justfiy-center items-center flex-wrap min-h-full">
+      <div className="font-Arimo flex flex-col justfiy-center items-center flex-wrap min-h-full">
         <h1 className="mt-12">Speed Clicker!</h1>
         <p>Times Clicked: {timesClicked} / 10</p>
         <p>Passed Seconds: {passedMilliseconds / 100}</p>

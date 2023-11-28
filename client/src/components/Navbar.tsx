@@ -23,10 +23,10 @@ export function Navbar({ loggedIn, setLoggedIn }: NavbarProps) {
 
   return (
     <div>
-      <div className="NAVBAR-CONTAINER bg-gradient-to-b from-greenGrad from-20% to-blueGrad to-100% shadow-sm flex h-16 items-center">
+      <div className="NAVBAR-CONTAINER font-Arimo bg-gradient-to-b from-greenGrad from-20% to-blueGrad to-100% shadow-sm flex h-16 items-center">
         <div className="NAVBAR-ENTRIES-GAMELIST  flex text-lg basis-1/2">
           <div className="CLICKER-GAMES-ENTRY p-3 m-3 shadow-xl bg-yellowHead rounded-xl">
-            <Link to="/home" className="m-2">
+            <Link to="/" className="m-2">
               ClickerGames!
             </Link>
           </div>

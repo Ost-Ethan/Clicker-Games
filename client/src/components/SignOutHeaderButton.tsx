@@ -5,7 +5,7 @@ type SignOutHeaderButtonProps = {
 
 export function SignOutHeaderButton({ setLoggedIn }: SignOutHeaderButtonProps) {
   return (
-    <div className="LOG-IN-BUTTON basis-full flex justify-end mx-2 my-0.5">
+    <div className="SIGN-OUT-BUTTON font-Arimo basis-full flex justify-end mx-2 my-0.5">
       <button
         className="py-2 px-20 bg-redLogOut/60 rounded-full"
         onClick={() => {

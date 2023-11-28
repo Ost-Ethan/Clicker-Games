@@ -20,12 +20,12 @@ export default function App() {
       <Route
         path="/"
         element={<Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}>
+        <Route index element={<HomePage />} />
         <Route
           path="SpeedClicker"
           element={<SpeedClicker loggedIn={loggedIn} />}
         />
         <Route path="Results" />
-        <Route path="Home" element={<HomePage />} />
         <Route path="Profile" />
         <Route
           path="UserLogin"

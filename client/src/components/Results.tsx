@@ -29,7 +29,7 @@ export function Results({
   }, [loggedIn, time]);
 
   return (
-    <div className="flex columns-2 flex-wrap justify-center items-start h-screen mt-16">
+    <div className="font-Arimo flex columns-2 flex-wrap justify-center items-start h-screen mt-16">
       <div className="justify-center flex flex-wrap text-center select-none">
         <div className="mb-6 text-3xl font-semibold">Result:</div>
         <div className="basis-full mb-20 text-2xl italic">
