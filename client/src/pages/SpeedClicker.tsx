@@ -35,7 +35,7 @@ export function SpeedClicker({ loggedIn }) {
             setIsStarted(true);
             setMillisecondsInterval(setInterval(timeSet));
           }}
-          className="m-3 mt-6 px-16 py-4 bg-greenSclick rounded-2xl">
+          className="m-3 mt-6 px-16 py-4 bg-greenSclick rounded-2xl shadow-xl">
           Start!
         </button>
       </div>

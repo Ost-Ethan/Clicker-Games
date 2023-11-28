@@ -29,7 +29,7 @@ export function ScoreBoard({ game, gameId }) {
 
   return (
     <>
-      <div className="border-solid border-2 flex flex-col basis-full max-w-sm rounded">
+      <div className="border-solid border-2 flex flex-col basis-full max-w-sm rounded select-none">
         <div className=" flex flex-wrap text-center border-b-2 bg-blueScoreboard h-12 justify-center content-center">
           Top Times for {game}:
         </div>
