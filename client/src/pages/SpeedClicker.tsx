@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Results } from '../components/Results';
 
-export function SpeedClicker() {
+export function SpeedClicker({ loggedIn }) {
   const [isStarted, setIsStarted] = useState(false);
   const [timesClicked, setTimesClicked] = useState(0);
   const [millisecondsInterval, setMillisecondsInterval] = useState<any>();
@@ -15,6 +15,7 @@ export function SpeedClicker() {
     clearInterval(millisecondsInterval);
     return (
       <Results
+        loggedIn={loggedIn}
         time={passedMilliseconds}
         setTimesClicked={setTimesClicked}
         setIsStarted={setIsStarted}

@@ -13,6 +13,7 @@ export default {
       blueScoreboard: '#7F84FF',
       yellowLogin: '#FFF84C',
       grayLogin: '#D9D9D9',
+      redLogOut: '#FF0000',
     },
     extend: {},
   },

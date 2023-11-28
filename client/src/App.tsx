@@ -4,9 +4,15 @@ import { Navbar } from './components/Navbar';
 import { SpeedClicker } from './pages/SpeedClicker';
 import { HomePage } from './pages/HomePage';
 import { UserLogin } from './pages/UserLogin';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function App() {
+  useEffect(() => {
+    if (sessionStorage.getItem('token')) {
+      setLoggedIn(true);
+    }
+  }, []);
+
   const [loggedIn, setLoggedIn] = useState(false);
 
   return (
@@ -14,7 +20,10 @@ export default function App() {
       <Route
         path="/"
         element={<Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}>
-        <Route path="SpeedClicker" element={<SpeedClicker />} />
+        <Route
+          path="SpeedClicker"
+          element={<SpeedClicker loggedIn={loggedIn} />}
+        />
         <Route path="Results" />
         <Route path="Home" element={<HomePage />} />
         <Route path="Profile" />

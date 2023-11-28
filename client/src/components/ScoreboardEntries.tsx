@@ -10,7 +10,7 @@ export function ScoreboardEntries({ scoreboardTimes }) {
         {element.username}
       </div>
       <div className="basis-3/6 flex justify-center content-center">
-        {element.bestTime / 1000} Seconds
+        {element.bestTime / 100} Seconds
       </div>
     </div>
   ));

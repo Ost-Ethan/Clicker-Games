@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import { LogInForm } from '../components/LogInForm';
 
 export function UserLogin({ setLoggedIn, loggedIn }) {
+  const navigate = useNavigate();
   if (loggedIn) {
     return (
       <>
@@ -39,8 +41,10 @@ export function UserLogin({ setLoggedIn, loggedIn }) {
 
       const { user, token } = await res.json();
       sessionStorage.setItem('token', token);
+      sessionStorage.setItem('username', user.username);
       console.log('Signed in', user, '; receieved token:', token);
       setLoggedIn(true);
+      navigate('/home');
     } catch (err) {
       console.log(err);
     }

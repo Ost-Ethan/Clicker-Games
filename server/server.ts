@@ -56,7 +56,35 @@ app.get('/api/times/:gameId', async (req, res, next) => {
   select *
     from "times"
     join "users" using ("userId")
-    where "gameId" = $1;
+    where "gameId" = $1
+    order by "bestTime"
+    limit 10;
+  `;
+    const params = [gameId];
+    const result = await db.query(sql, params);
+    if (!result) {
+      throw new ClientError(500, 'An unexpected error has occured.');
+    }
+    const scores = result.rows;
+    res.json(scores);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Get a user's time for the current game.
+app.get('/api/times/:gameId', authMiddleware, async (req, res, next) => {
+  try {
+    // const { userId } = req.user;
+    const { gameId } = req.params;
+    if (!gameId) {
+      throw new ClientError(401, 'A valid gameId is required');
+    }
+    const sql = `
+  select *
+    from "times"
+    where "gameId" = $2
+    and "userId" = $1
   `;
     const params = [gameId];
     const result = await db.query(sql, params);
@@ -73,13 +101,22 @@ app.get('/api/times/:gameId', async (req, res, next) => {
 // Post a new time to the list. This could be used for posting the first time for an user.
 app.post('/api/times', authMiddleware, async (req, res, next) => {
   try {
-    const { userId, gameId, bestTime } = req.body;
-    if (!userId || !gameId || !bestTime) {
-      throw new ClientError(
-        401,
-        'A userId, gameId, and bestTime are required.'
-      );
+    if (!req.user) {
+      throw new ClientError(401, 'not logged in');
     }
+    const { userId } = req.user;
+    const { gameId, bestTime } = req.body;
+    // I had to split this up for debugging purposes
+    if (!userId) {
+      throw new ClientError(401, 'No UserId');
+    }
+    if (!gameId) {
+      throw new ClientError(401, 'No gameId');
+    }
+    if (!bestTime) {
+      throw new ClientError(401, 'No bestTime');
+    }
+
     const sql = `
   insert into "times" ("userId", "gameId", "bestTime")
     values ($1, $2, $3)

@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom';
 
-export function LoginHeaderButton({ setOnLoginPage }) {
+export function LoginHeaderButton() {
   return (
     <>
       <div className="LOG-IN-BUTTON basis-full flex justify-end mx-2 my-0.5">
         <Link to={`UserLogin`}>
-          <button
-            className="p-4 px-20 bg-yellowLogin rounded-full"
-            onClick={() => setOnLoginPage(true)}>
+          <button className="p-4 px-20 bg-yellowLogin rounded-full">
             Sign In
           </button>
         </Link>
