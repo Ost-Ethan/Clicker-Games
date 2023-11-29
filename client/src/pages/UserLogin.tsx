@@ -44,7 +44,7 @@ export function UserLogin({ setLoggedIn, loggedIn }) {
       sessionStorage.setItem('username', user.username);
       console.log('Signed in', user, '; receieved token:', token);
       setLoggedIn(true);
-      navigate('/home');
+      navigate('/');
     } catch (err) {
       console.log(err);
     }

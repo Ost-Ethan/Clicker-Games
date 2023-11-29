@@ -73,9 +73,12 @@ app.get('/api/times/:gameId', async (req, res, next) => {
 });
 
 // Get a user's time for the current game.
-app.get('/api/times/:gameId', authMiddleware, async (req, res, next) => {
+app.get('/api/user/:gameId', authMiddleware, async (req, res, next) => {
   try {
-    // const { userId } = req.user;
+    if (!req.user) {
+      throw new ClientError(401, 'User is not signed in!');
+    }
+    const { userId } = req.user;
     const { gameId } = req.params;
     if (!gameId) {
       throw new ClientError(401, 'A valid gameId is required');
@@ -83,10 +86,12 @@ app.get('/api/times/:gameId', authMiddleware, async (req, res, next) => {
     const sql = `
   select *
     from "times"
-    where "gameId" = $2
-    and "userId" = $1
+    where "userId" = $1
+    and "gameId" = $2
+    order by "bestTime"
+    limit 1;
   `;
-    const params = [gameId];
+    const params = [userId, gameId];
     const result = await db.query(sql, params);
     if (!result) {
       throw new ClientError(500, 'An unexpected error has occured.');
@@ -134,7 +139,11 @@ app.post('/api/times', authMiddleware, async (req, res, next) => {
 // updates a user's time entry if they have gotten a time that is better than their best time.
 app.put('/api/times', authMiddleware, async (req, res, next) => {
   try {
-    const { userId, gameId, bestTime } = req.body;
+    if (!req.user) {
+      throw new ClientError(400, 'Invalid User');
+    }
+    const { userId } = req.user;
+    const { gameId, bestTime } = req.body;
     const sql = `
   update "times"
     set
@@ -170,7 +179,7 @@ app.get('/api/users', async (req, res, next) => {
 });
 
 // This endpoint calls all scores for the current user when displaying them on the profile page. Unfinshed currently.
-app.get('/api/user/:username', async (req, res, next) => {
+app.get('/api/user/:username', authMiddleware, async (req, res, next) => {
   try {
     const { username } = req.params;
     if (!username) {

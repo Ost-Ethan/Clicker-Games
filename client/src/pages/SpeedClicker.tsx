@@ -15,6 +15,7 @@ export function SpeedClicker({ loggedIn }) {
     clearInterval(millisecondsInterval);
     return (
       <Results
+        gameId={1}
         loggedIn={loggedIn}
         time={passedMilliseconds}
         setTimesClicked={setTimesClicked}

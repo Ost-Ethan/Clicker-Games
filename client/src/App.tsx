@@ -5,6 +5,8 @@ import { SpeedClicker } from './pages/SpeedClicker';
 import { HomePage } from './pages/HomePage';
 import { UserLogin } from './pages/UserLogin';
 import { useEffect, useState } from 'react';
+import { Profile } from './pages/Profile';
+import { QuickDraw } from './pages/QuickDraw';
 
 export default function App() {
   useEffect(() => {
@@ -25,12 +27,12 @@ export default function App() {
           path="SpeedClicker"
           element={<SpeedClicker loggedIn={loggedIn} />}
         />
-        <Route path="Results" />
-        <Route path="Profile" />
+        <Route path="Profile" element={<Profile loggedIn={loggedIn} />} />
         <Route
           path="UserLogin"
           element={<UserLogin setLoggedIn={setLoggedIn} loggedIn={loggedIn} />}
         />
+        <Route path="QuickDraw" element={<QuickDraw />} />
       </Route>
     </Routes>
   );

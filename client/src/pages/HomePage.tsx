@@ -1,6 +1,6 @@
-import speedClicker from '../assets/speedClickerButton.png';
-import quickDraw from '../assets/QuickDrawHomeButton.png';
-import game3 from '../assets/Game3HomeButton.png';
+import speedClicker from '/speedClickerButton.png';
+import quickDraw from '/QuickDrawHomeButton.png';
+import game3 from '/Game3HomeButton.png';
 import { Link } from 'react-router-dom';
 
 export function HomePage() {
@@ -16,11 +16,11 @@ export function HomePage() {
           </Link>
         </div>
         <div className="flex flex-wrap m-4">
-          <img src={quickDraw}></img>
+          <img src={quickDraw} alt="QuickDraw Game Button"></img>
         </div>
       </div>
       <div className="w-screen flex justify-center mt-4">
-        <img src={game3}></img>
+        <img src={game3} alt="game3 button"></img>
       </div>
     </>
   );
