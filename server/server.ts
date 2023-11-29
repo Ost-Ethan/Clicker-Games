@@ -72,7 +72,7 @@ app.get('/api/times/:gameId', async (req, res, next) => {
   }
 });
 
-// Get a user's time for the current game.
+// Get a user's time for the current game. Used to show the bestTime on the results screen.
 app.get('/api/user/:gameId', authMiddleware, async (req, res, next) => {
   try {
     if (!req.user) {
@@ -92,6 +92,31 @@ app.get('/api/user/:gameId', authMiddleware, async (req, res, next) => {
     limit 1;
   `;
     const params = [userId, gameId];
+    const result = await db.query(sql, params);
+    if (!result) {
+      throw new ClientError(500, 'An unexpected error has occured.');
+    }
+    const scores = result.rows;
+    res.json(scores);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Gets all bestTimes associated with the user from the JWT Token.
+app.get('/api/user/', authMiddleware, async (req, res, next) => {
+  try {
+    if (!req.user) {
+      throw new ClientError(401, 'User is not signed in!');
+    }
+    const { userId } = req.user;
+    const sql = `
+  select *
+    from "times"
+    where "userId" = $1
+    order by "gameId";
+  `;
+    const params = [userId];
     const result = await db.query(sql, params);
     if (!result) {
       throw new ClientError(500, 'An unexpected error has occured.');
