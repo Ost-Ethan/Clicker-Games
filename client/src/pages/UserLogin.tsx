@@ -37,6 +37,7 @@ export function UserLogin({ setLoggedIn, loggedIn }) {
       setLoggedIn(true);
       navigate('/');
     } catch (err) {
+      alert(`User Login was invalid.`);
       console.log(err);
     }
   }
@@ -51,18 +52,18 @@ export function UserLogin({ setLoggedIn, loggedIn }) {
   }
 
   return (
-    <div className="flex">
-      <div className="LOGIN-COLUMN rounded-full pb-20 mt-20 ml-20 bg-blueGrad flex flex-wrap justify-center basis-5/12">
-        <div className="LOGIN-TEXT flex justify-center self-start w-full mt-32 mb-20">
+    <div className="flex flex-wrap md:flex-nowrap columns-1 justify-center">
+      <div className="LOGIN-COLUMN rounded-full w-full mt-4 p-6 md:pb-20 md:mt-20 md:ml-20 bg-blueGrad flex flex-wrap justify-center md:basis-5/12">
+        <div className="LOGIN-TEXT flex justify-center self-start w-full mt-16 mb-12 md:mt-32 md:mb-20">
           Login!
         </div>
         <LogInForm buttonText={'Log in'} submitFunction={handleLogIn} />
       </div>
-      <div className="flex flex-wrap content-center justify-center basis-2/12">
+      <div className="flex flex-wrap content-center justify-center md:basis-2/12">
         Or
       </div>
-      <div className="LOGIN-COLUMN rounded-full pb-20 mt-20 mr-20 bg-greenGrad flex flex-wrap justify-center basis-5/12">
-        <div className="LOGIN-TEXT flex justify-center self-start w-full mt-32 mb-20">
+      <div className="LOGIN-COLUMN rounded-full w-full p-6 md:pb-20 md:mt-20 md:mr-20 bg-greenGrad flex flex-wrap justify-center md:basis-5/12">
+        <div className="LOGIN-TEXT flex justify-center self-start w-full mt-16 mb-12 md:mt-32 md:mb-20">
           Sign Up!
         </div>
         <LogInForm
