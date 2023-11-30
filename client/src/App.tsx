@@ -1,35 +1,39 @@
+import { Route, Routes } from 'react-router-dom';
+// Import all other page components here.
+import { Navbar } from './components/Navbar';
+import { SpeedClicker } from './pages/SpeedClicker';
+import { HomePage } from './pages/HomePage';
+import { UserLogin } from './pages/UserLogin';
 import { useEffect, useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '../public/vite.svg';
-import './App.css';
+import { Profile } from './pages/Profile';
+import { QuickDraw } from './pages/QuickDraw';
 
 export default function App() {
-  const [serverData, setServerData] = useState('');
-
   useEffect(() => {
-    async function readServerData() {
-      const resp = await fetch('/api/hello');
-      const data = await resp.json();
-
-      console.log('Data from server:', data);
-
-      setServerData(data.message);
+    if (sessionStorage.getItem('token')) {
+      setLoggedIn(true);
     }
-
-    readServerData();
   }, []);
 
+  const [loggedIn, setLoggedIn] = useState(false);
+
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>{serverData}</h1>
-    </>
+    <Routes>
+      <Route
+        path="/"
+        element={<Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}>
+        <Route index element={<HomePage />} />
+        <Route
+          path="SpeedClicker"
+          element={<SpeedClicker loggedIn={loggedIn} />}
+        />
+        <Route path="Profile" element={<Profile loggedIn={loggedIn} />} />
+        <Route
+          path="UserLogin"
+          element={<UserLogin setLoggedIn={setLoggedIn} loggedIn={loggedIn} />}
+        />
+        <Route path="QuickDraw" element={<QuickDraw />} />
+      </Route>
+    </Routes>
   );
 }
