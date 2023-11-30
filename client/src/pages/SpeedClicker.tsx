@@ -45,7 +45,7 @@ export function SpeedClicker({ loggedIn }) {
     );
   } else {
     return (
-      <div className="font-Arimo flex flex-col justfiy-center items-center flex-wrap min-h-full">
+      <div className="font-Arimo flex flex-col justfiy-center items-center flex-wrap min-h-full select-none">
         <h1 className="mt-12 text-2xl">Speed Clicker!</h1>
         <p className="text-lg mt-4">Times Clicked: {timesClicked} / 10</p>
         <p className="text-xl mt-4">
