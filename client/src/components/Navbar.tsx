@@ -24,28 +24,28 @@ export function Navbar({ loggedIn, setLoggedIn }: NavbarProps) {
 
   return (
     <div>
-      <div className="NAVBAR-CONTAINER font-Arimo bg-gradient-to-b from-greenGrad from-20% to-blueGrad to-100% shadow-sm flex h-16 items-center">
-        <div className="NAVBAR-ENTRIES-GAMELIST  flex text-lg basis-1/2">
+      <div className="NAVBAR-CONTAINER font-Arimo max-w-screen bg-gradient-to-b from-greenGrad from-20% to-blueGrad to-100% shadow-sm flex h-16 items-center">
+        <div className="NAVBAR-ENTRIES-GAMELIST mt-2 ml-2 md:mb-2 text-center flex md:text-lg basis-1/2">
           <Link to="/">
-            <div className="CLICKER-GAMES-ENTRY p-3 m-3 shadow-xl bg-yellowHead rounded-xl active:translate-y-0.5 active:translate-x-0.5">
-              ClickerGames!
+            <div className="CLICKER-GAMES-ENTRY flex flex-wrap mr-2 px-4 md:p-3 md:m-3 shadow-xl bg-yellowHead rounded-xl active:translate-y-0.5 active:translate-x-0.5">
+              Clicker Games!
             </div>
           </Link>
           <Link to="/SpeedClicker">
-            <div className="SPEED-CLICKER-ENTRY p-3 m-3 shadow-xl bg-greenHead rounded-xl active:translate-y-0.5 active:translate-x-0.5">
-              SpeedClicker
+            <div className="SPEED-CLICKER-ENTRY flex flex-wrap mr-2 px-4 md:p-3 md:m-3 shadow-xl bg-greenHead rounded-xl active:translate-y-0.5 active:translate-x-0.5">
+              Speed Clicker
             </div>
           </Link>
           <Link to="/QuickDraw">
-            <div className="QUICKDRAW-ENTRY p-3 m-3 shadow-xl bg-redHead rounded-xl active:translate-y-0.5 active:translate-x-0.5">
-              QuickDraw
+            <div className="QUICKDRAW-ENTRY flex flex-wrap px-4 md:p-3 md:m-3 shadow-xl bg-redHead rounded-xl active:translate-y-0.5 active:translate-x-0.5">
+              Quick Draw
             </div>
           </Link>
         </div>
         <div className="NAVBAR-ENTRIES-USER flex basis-1/2 justify-end">
           <Link to="/Profile">
-            <div className="USER-ENTRY flex flex-wrap mr-8 bg-redHead p-2 px-4 rounded-2xl shadow-xl  active:translate-y-0.5 active:translate-x-0.5">
-              <div className="mr-2">
+            <div className="USER-ENTRY flex flex-wrap mr-2 p-2 md:mr-8 bg-redHead md:p-2 md:px-4 rounded-2xl shadow-xl  active:translate-y-0.5 active:translate-x-0.5">
+              <div className="md:mr-2">
                 {sessionStorage.getItem('username') || 'Guest User'}
               </div>
               <img className="w-6" src={blankUser}></img>
