@@ -1,3 +1,5 @@
+import { ScoreBoard } from '../components/ScoreBoard';
+
 export function QuickDraw() {
-  return <div>This is the quickdraw page!</div>;
+  return <ScoreBoard gameId={2} game={'QuickDraw'} />;
 }

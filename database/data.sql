@@ -12,7 +12,11 @@
 
 insert into "users" ("username", "password")
 values
-    ('Admin2', '$argon2id$v=19$m=4096,t=3,p=1$2pmN99IiEUzA9yxzhUBhiA$OemaFRk2kDMzkAnrCBXJNM4z3ghIdWUTaUw0iytYm48');
+    ('Admin2', '$argon2id$v=19$m=4096,t=3,p=1$2pmN99IiEUzA9yxzhUBhiA$OemaFRk2kDMzkAnrCBXJNM4z3ghIdWUTaUw0iytYm48'),
+    ('I', '$argon2id$v=19$m=4096,t=3,p=1$2pmN99IiEUzA9yxzhUBhiA$OemaFRk2kDMzkAnrCBXJNM4z3ghIdWUTaUw0iytYm48'),
+    ('Am', '$argon2id$v=19$m=4096,t=3,p=1$2pmN99IiEUzA9yxzhUBhiA$OemaFRk2kDMzkAnrCBXJNM4z3ghIdWUTaUw0iytYm48'),
+    ('Finished', '$argon2id$v=19$m=4096,t=3,p=1$2pmN99IiEUzA9yxzhUBhiA$OemaFRk2kDMzkAnrCBXJNM4z3ghIdWUTaUw0iytYm48'),
+    ('Presenting!', '$argon2id$v=19$m=4096,t=3,p=1$2pmN99IiEUzA9yxzhUBhiA$OemaFRk2kDMzkAnrCBXJNM4z3ghIdWUTaUw0iytYm48');
 
 insert into "games" ("gameName")
   values
@@ -23,4 +27,8 @@ insert into "games" ("gameName")
 
 insert into "times" ("userId", "gameId", "bestTime")
   values
-      (1, 1, 1334);
+      (1, 1, 1334),
+      (2, 2, 1),
+      (3, 2, 2),
+      (4, 2, 3),
+      (5, 2, 4);
