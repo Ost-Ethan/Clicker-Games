@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ScoreboardEntries } from './ScoreboardEntries';
 
 export function ScoreBoard({ game, gameId }) {
-  const [scoreboardTimes, setScoreboardTimes] = useState();
+  const [scoreboardTimes, setScoreboardTimes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
