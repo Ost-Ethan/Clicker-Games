@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 export function HomePage() {
   return (
     <>
-      <div className="font-Arimo flex justify-center text-4xl">
+      <div className="font-Arimo mt-6 flex justify-center text-4xl">
         Clicker Games!
       </div>
       <div className="w-screen flex-wrap flex mt-16 justify-around">
