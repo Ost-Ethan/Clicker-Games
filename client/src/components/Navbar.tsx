@@ -15,7 +15,7 @@ export function Navbar({ loggedIn, setLoggedIn }: NavbarProps) {
   const [onLoginPage, setOnLoginPage] = useState(true);
 
   useEffect(() => {
-    if (location.pathname != '/UserLogin') {
+    if (location.pathname != '/UserLogin' && location.pathname != '/Profile') {
       setOnLoginPage(false);
     } else {
       setOnLoginPage(true);
@@ -26,31 +26,31 @@ export function Navbar({ loggedIn, setLoggedIn }: NavbarProps) {
     <div>
       <div className="NAVBAR-CONTAINER font-Arimo bg-gradient-to-b from-greenGrad from-20% to-blueGrad to-100% shadow-sm flex h-16 items-center">
         <div className="NAVBAR-ENTRIES-GAMELIST  flex text-lg basis-1/2">
-          <div className="CLICKER-GAMES-ENTRY p-3 m-3 shadow-xl bg-yellowHead rounded-xl">
-            <Link to="/" className="m-2">
+          <Link to="/">
+            <div className="CLICKER-GAMES-ENTRY p-3 m-3 shadow-xl bg-yellowHead rounded-xl active:translate-y-0.5 active:translate-x-0.5">
               ClickerGames!
-            </Link>
-          </div>
-          <div className="SPEED-CLICKER-ENTRY p-3 m-3 shadow-xl bg-greenHead rounded-xl">
-            <Link to="/SpeedClicker" className="m-2">
+            </div>
+          </Link>
+          <Link to="/SpeedClicker">
+            <div className="SPEED-CLICKER-ENTRY p-3 m-3 shadow-xl bg-greenHead rounded-xl active:translate-y-0.5 active:translate-x-0.5">
               SpeedClicker
-            </Link>
-          </div>
-          <div className="QUICKDRAW-ENTRY p-3 m-3 shadow-xl bg-redHead rounded-xl">
-            <Link to="/QuickDraw" className="m-2">
+            </div>
+          </Link>
+          <Link to="/QuickDraw">
+            <div className="QUICKDRAW-ENTRY p-3 m-3 shadow-xl bg-redHead rounded-xl active:translate-y-0.5 active:translate-x-0.5">
               QuickDraw
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
         <div className="NAVBAR-ENTRIES-USER flex basis-1/2 justify-end">
-          <div className="USER-ENTRY flex flex-wrap mr-8 bg-redHead p-2 px-4 rounded-2xl shadow-xl">
-            <div className="mr-2">
-              <Link to="/Profile">
+          <Link to="/Profile">
+            <div className="USER-ENTRY flex flex-wrap mr-8 bg-redHead p-2 px-4 rounded-2xl shadow-xl  active:translate-y-0.5 active:translate-x-0.5">
+              <div className="mr-2">
                 {sessionStorage.getItem('username') || 'Guest User'}
-              </Link>
+              </div>
+              <img className="w-6" src={blankUser}></img>
             </div>
-            <img className="w-6" src={blankUser}></img>
-          </div>
+          </Link>
         </div>
       </div>
       {loggedIn || onLoginPage || <LoginHeaderButton />}

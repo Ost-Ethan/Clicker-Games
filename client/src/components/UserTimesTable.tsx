@@ -34,8 +34,6 @@ export function UserTimesTable() {
     getUserTimes();
   }, []);
 
-  console.log(userTimes);
-
   if (isLoading) {
     return <div>Loading your times...</div>;
   }
@@ -51,7 +49,7 @@ export function UserTimesTable() {
             Game
           </div>
           <div className="px-2 border-solid basis-1/2  flex justify-center">
-            Your Time
+            Your Best Time
           </div>
           <div className="ENTRY bg-orangeScoreboard flex basis-full m-2 my-0.5 p-2 px-4 rounded-full">
             <div className="basis-1/2 flex break-all justify-center pr-2">

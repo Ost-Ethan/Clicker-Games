@@ -9,7 +9,6 @@ export function LogInForm({ buttonText, submitFunction }) {
       username,
       inputPassword,
     };
-    console.log(userInfo);
     setUsername('');
     setInputPassword('');
     submitFunction(userInfo);
@@ -18,32 +17,29 @@ export function LogInForm({ buttonText, submitFunction }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="USERNAME-FORM flex flex-wrap flex-col"
-      id="LogInForm">
-      <label className="text-left" htmlFor="username">
+      className="USERNAME-FORM flex flex-wrap flex-col items-center">
+      <label className="">
         UserName
+        <input
+          required
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-42 border-solid border-4 border-grayLogin rounded-2xl p-2"
+        />
       </label>
-      <input
-        required
-        id="username"
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="w-42 border-solid border-4 border-grayLogin rounded-2xl p-2"
-      />
-      <label className="mt-4" htmlFor="password">
+      <label className="mt-4">
         Password
+        <input
+          required
+          value={inputPassword}
+          onChange={(e) => setInputPassword(e.target.value)}
+          type="password"
+          className="w-42 border-solid border-4 border-grayLogin rounded-2xl p-2"
+        />
       </label>
-      <input
-        required
-        value={inputPassword}
-        onChange={(e) => setInputPassword(e.target.value)}
-        id="password"
-        type="text"
-        className="w-42 border-solid border-4 border-grayLogin rounded-2xl p-2"
-      />
       <button
-        className="mt-12 self-center py-2 px-6 w-30 bg-yellowLogin rounded-2xl"
+        className="mt-12 self-center py-2 px-6 w-30 bg-yellowLogin rounded-2xl active:translate-y-0.5 active:translate-x-0.5"
         type="submit">
         {buttonText}
       </button>

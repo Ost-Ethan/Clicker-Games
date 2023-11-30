@@ -3,14 +3,6 @@ import { LogInForm } from '../components/LogInForm';
 
 export function UserLogin({ setLoggedIn, loggedIn }) {
   const navigate = useNavigate();
-  if (loggedIn) {
-    return (
-      <>
-        <div> You are already signed in!</div>
-        <button>Sign Out</button>
-      </>
-    );
-  }
 
   async function handleSignUp(userInfo) {
     try {
@@ -22,7 +14,7 @@ export function UserLogin({ setLoggedIn, loggedIn }) {
       if (!res.ok) {
         throw new Error(`${res.status}`);
       }
-      console.log(res.status);
+      alert('You have successfully signed up!');
     } catch (err) {
       console.log(err);
     }
@@ -42,12 +34,20 @@ export function UserLogin({ setLoggedIn, loggedIn }) {
       const { user, token } = await res.json();
       sessionStorage.setItem('token', token);
       sessionStorage.setItem('username', user.username);
-      console.log('Signed in', user, '; receieved token:', token);
       setLoggedIn(true);
       navigate('/');
     } catch (err) {
       console.log(err);
     }
+  }
+
+  if (loggedIn) {
+    return (
+      <>
+        <div> You are already signed in!</div>
+        <button>Sign Out</button>
+      </>
+    );
   }
 
   return (

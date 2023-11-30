@@ -28,15 +28,17 @@ export function SpeedClicker({ loggedIn }) {
   if (isStarted === false) {
     return (
       <div className="font-Arimo flex flex-col justfiy-center items-center flex-wrap">
-        <h1 className="m-6">Speed Clicker!</h1>
-        <p className="m-0.25">Instructions:</p>
-        <p>Click the button 10 times as fast as you can!</p>
+        <h1 className="m-6 text-3xl">Speed Clicker!</h1>
+        <p className="m-0.25 text-2xl">Instructions:</p>
+        <p className="text-lg mt-2">
+          Click the button 10 times as fast as you can!
+        </p>
         <button
           onClick={() => {
             setIsStarted(true);
             setMillisecondsInterval(setInterval(timeSet));
           }}
-          className="m-3 mt-6 px-16 py-4 bg-greenSclick rounded-2xl shadow-xl">
+          className="text-xl m-3 mt-6 px-16 py-4 bg-greenSclick rounded-2xl shadow-xl active:translate-y-0.5 active:translate-x-0.5">
           Start!
         </button>
       </div>
@@ -44,12 +46,14 @@ export function SpeedClicker({ loggedIn }) {
   } else {
     return (
       <div className="font-Arimo flex flex-col justfiy-center items-center flex-wrap min-h-full">
-        <h1 className="mt-12">Speed Clicker!</h1>
-        <p>Times Clicked: {timesClicked} / 10</p>
-        <p>Passed Seconds: {passedMilliseconds / 100}</p>
+        <h1 className="mt-12 text-2xl">Speed Clicker!</h1>
+        <p className="text-lg mt-4">Times Clicked: {timesClicked} / 10</p>
+        <p className="text-xl mt-4">
+          Passed Seconds: {passedMilliseconds / 100}
+        </p>
         <button
           onClick={() => setTimesClicked((prev) => prev + 1)}
-          className="mt-56 w-60 h-60 bg-greenSclick rounded-full self-center active:bg-greenHead"></button>
+          className="mt-36 w-60 h-60 bg-greenSclick rounded-full self-center active:bg-greenHead"></button>
       </div>
     );
   }

@@ -21,7 +21,7 @@ export function ScoreBoard({ game, gameId }) {
       }
     }
     getTimes();
-  }, [gameId]);
+  });
 
   if (isLoading) {
     return <div>Loading Scoreboard...</div>;

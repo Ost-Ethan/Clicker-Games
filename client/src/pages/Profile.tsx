@@ -5,12 +5,14 @@ import blankUser from '../assets/Portrait_Placeholder.png';
 export function Profile({ loggedIn }) {
   if (!loggedIn) {
     return (
-      <>
-        <div>You are not logged in!</div>
-        <button>
-          <Link to="/UserLogin">Log in!</Link>
-        </button>
-      </>
+      <div className="font-Arimo w-screen flex flex-col items-center">
+        <div className="text-xl mt-16">You are not logged in!</div>
+        <Link to="/UserLogin">
+          <button className="mt-32 py-12 px-28 bg-yellowLogin rounded-full bg-greenHead active:translate-y-0.5 active:translate-x-0.5">
+            Log in!
+          </button>
+        </Link>
+      </div>
     );
   }
 

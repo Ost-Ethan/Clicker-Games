@@ -14,7 +14,7 @@ export function Results({
 
   useEffect(() => {
     async function handleScoreUpdate() {
-      const res = await fetch('/api/times', {
+      await fetch('/api/times', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -22,9 +22,6 @@ export function Results({
         },
         body: JSON.stringify({ gameId: 1, bestTime: time }),
       });
-
-      const response = await res.json();
-      console.log(response);
     }
 
     async function handleScoreSubmit() {
@@ -56,7 +53,9 @@ export function Results({
         setBestTime(response[0].bestTime);
       }
     }
-    handleGetBestScore();
+    if (loggedIn) {
+      handleGetBestScore();
+    }
   });
 
   return (
@@ -73,23 +72,22 @@ export function Results({
               setIsStarted(false);
               setPassedMilliseconds(0);
             }}
-            className="py-6 px-4 m-2 bg-greenHead rounded-lg shadow-xl select-none">
+            className="text-lg py-6 px-4 m-2 bg-greenHead rounded-lg shadow-xl select-none  active:translate-y-0.5 active:translate-x-0.5">
             Play Again!
           </button>
           <Link to={'/'}>
-            <button className="py-6 px-4 m-2 bg-yellowHead rounded-lg shadow-xl select-none">
+            <button className="text-lg py-6 px-4 m-2 bg-yellowHead rounded-lg shadow-xl select-none  active:translate-y-0.5 active:translate-x-0.5">
               Home Page
             </button>
           </Link>
         </div>
         {loggedIn ? (
-          <div className="mt-20 max-w-s select-none">
-            {' '}
-            Your best time for SpeedClicker is:{' '}
+          <div className="mt-20 max-w-s select-none text-lg">
+            Your best time for SpeedClicker is:
             {bestTime ? `${bestTime / 100} seconds!` : 'Loading...'}
           </div>
         ) : (
-          <div className="text-center mt-20 max-w-xs select-none">
+          <div className="text-center mt-20 max-w-xs select-none text-lg">
             Log in to see your best score and compete on the leaderboard!
           </div>
         )}
