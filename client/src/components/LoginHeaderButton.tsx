@@ -10,7 +10,7 @@ export function LoginHeaderButton() {
           </button>
         </Link>
       </div>
-      <div className="text-sm font-Arimo min-w-max ml-40 basis-full flex flex-wrap justify-end mx-4 my-0.5 select-none">
+      <div className="text-sm md:text-lg font-Arimo min-w-max ml-40 basis-full flex flex-wrap justify-end mx-4 my-0.5 select-none">
         <p>Log in to save your scores!</p>
       </div>
     </>
