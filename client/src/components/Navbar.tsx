@@ -22,6 +22,7 @@ export function Navbar({ loggedIn, setLoggedIn }: NavbarProps) {
     }
   }, [location.pathname]);
 
+  // There is scaling issues for mobile navbar when a user is logged in and their name is longer than 10 characters. Need to dynamically adjust username name to ...s after 10 characters.
   return (
     <div>
       <div className="NAVBAR-CONTAINER font-Arimo max-w-screen bg-gradient-to-b from-greenGrad from-20% to-blueGrad to-100% shadow-sm flex h-16 items-center">
@@ -45,7 +46,7 @@ export function Navbar({ loggedIn, setLoggedIn }: NavbarProps) {
         <div className="NAVBAR-ENTRIES-USER flex basis-1/2 justify-end">
           <Link to="/Profile">
             <div className="USER-ENTRY flex flex-wrap mr-2 p-2 md:mr-8 bg-redHead md:p-2 md:px-4 rounded-2xl shadow-xl  active:translate-y-0.5 active:translate-x-0.5">
-              <div className="md:mr-2">
+              <div className="md:mr-2 max-w-10">
                 {sessionStorage.getItem('username') || 'Guest User'}
               </div>
               <img className="w-6" src={blankUser}></img>
