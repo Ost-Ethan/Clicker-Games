@@ -82,10 +82,12 @@ export function Results({
           </Link>
         </div>
         {loggedIn ? (
-          <div className="mt-20 max-w-s select-none text-lg">
-            Your best time for SpeedClicker is:
-            {bestTime ? `${bestTime / 100} seconds!` : 'Loading...'}
-          </div>
+          <>
+            <div className="mt-20 max-w-s select-none text-lg">
+              Your best time for SpeedClicker is
+              {bestTime ? ` ${bestTime / 100} seconds!` : 'Loading...'}
+            </div>
+          </>
         ) : (
           <div className="text-center mt-20 max-w-xs select-none text-lg">
             Log in to see your best score and compete on the leaderboard!
