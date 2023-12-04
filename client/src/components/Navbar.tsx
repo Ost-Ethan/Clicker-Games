@@ -4,16 +4,14 @@ import { useEffect, useState } from 'react';
 import { LoginHeaderButton } from './LoginHeaderButton';
 import { SignOutHeaderButton } from './SignOutHeaderButton';
 import blankUser from '../assets/Portrait_Placeholder.png';
+import { useContext } from 'react';
+import { AppContext } from './AppContext';
 
-type NavbarProps = {
-  loggedIn: boolean;
-  setLoggedIn: (state: boolean) => void;
-};
-
-export function Navbar({ loggedIn, setLoggedIn }: NavbarProps) {
+export function Navbar() {
   const location = useLocation();
   const [onLoginPage, setOnLoginPage] = useState(true);
 
+  const { loggedIn, setLoggedIn } = useContext(AppContext);
   useEffect(() => {
     if (location.pathname != '/UserLogin' && location.pathname != '/Profile') {
       setOnLoginPage(false);

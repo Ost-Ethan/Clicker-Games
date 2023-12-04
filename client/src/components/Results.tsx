@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { ScoreBoard } from './ScoreBoard';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AppContext } from './AppContext';
 
 export function Results({
   gameId,
-  loggedIn,
   time,
   setTimesClicked,
   setIsStarted,
@@ -12,6 +12,7 @@ export function Results({
 }) {
   const [bestTime, setBestTime] = useState();
 
+  const { loggedIn } = useContext(AppContext);
   useEffect(() => {
     async function handleScoreUpdate() {
       await fetch('/api/times', {
