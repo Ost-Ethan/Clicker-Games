@@ -17,9 +17,12 @@ export default function App() {
   }, []);
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
   const contextValues = {
     loggedIn,
     setLoggedIn,
+    isStarted,
+    setIsStarted,
   };
 
   return (

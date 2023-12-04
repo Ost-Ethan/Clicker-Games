@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { Results } from '../components/Results';
+import { useContext } from 'react';
+import { AppContext } from '../components/AppContext';
 
 export function SpeedClicker() {
-  const [isStarted, setIsStarted] = useState(false);
   const [timesClicked, setTimesClicked] = useState(0);
   const [millisecondsInterval, setMillisecondsInterval] = useState<any>();
   const [passedMilliseconds, setPassedMilliseconds] = useState(0);
 
+  const { isStarted, setIsStarted } = useContext(AppContext);
+
+  console.log(isStarted);
   function timeSet() {
     setPassedMilliseconds((prev) => prev + 1);
   }
@@ -16,9 +20,8 @@ export function SpeedClicker() {
     return (
       <Results
         gameId={1}
-        time={passedMilliseconds}
+        passedMilliseconds={passedMilliseconds}
         setTimesClicked={setTimesClicked}
-        setIsStarted={setIsStarted}
         setPassedMilliseconds={setPassedMilliseconds}
       />
     );

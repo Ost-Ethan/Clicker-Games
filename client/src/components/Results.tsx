@@ -5,14 +5,13 @@ import { AppContext } from './AppContext';
 
 export function Results({
   gameId,
-  time,
+  passedMilliseconds,
   setTimesClicked,
-  setIsStarted,
   setPassedMilliseconds,
 }) {
   const [bestTime, setBestTime] = useState();
 
-  const { loggedIn } = useContext(AppContext);
+  const { loggedIn, setIsStarted } = useContext(AppContext);
   useEffect(() => {
     async function handleScoreUpdate() {
       await fetch('/api/times', {
@@ -21,7 +20,7 @@ export function Results({
           'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
-        body: JSON.stringify({ gameId: 1, bestTime: time }),
+        body: JSON.stringify({ gameId: 1, bestTime: passedMilliseconds }),
       });
     }
 
@@ -32,7 +31,7 @@ export function Results({
           'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
-        body: JSON.stringify({ gameId: 1, bestTime: time }),
+        body: JSON.stringify({ gameId: 1, bestTime: passedMilliseconds }),
       });
     }
 
@@ -46,11 +45,11 @@ export function Results({
       const response = await res.json();
       if (!response[0]) {
         handleScoreSubmit();
-        setBestTime(time);
-      } else if (response[0].bestTime > time) {
+        setBestTime(passedMilliseconds);
+      } else if (response[0].bestTime > passedMilliseconds) {
         handleScoreUpdate();
-        setBestTime(time);
-      } else if (response[0].bestTime < time) {
+        setBestTime(passedMilliseconds);
+      } else if (response[0].bestTime < passedMilliseconds) {
         setBestTime(response[0].bestTime);
       }
     }
@@ -64,7 +63,7 @@ export function Results({
       <div className="justify-center flex flex-wrap text-center select-none">
         <div className="mb-6 text-3xl font-semibold">Result:</div>
         <div className="basis-full mb-20 text-2xl italic">
-          {time / 100} seconds!
+          {passedMilliseconds / 100} seconds!
         </div>
         <div className="basis-full">
           <button
