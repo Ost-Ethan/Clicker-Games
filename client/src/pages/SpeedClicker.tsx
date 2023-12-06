@@ -1,30 +1,26 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Results } from '../components/Results';
-import { useContext } from 'react';
 import { AppContext } from '../components/AppContext';
 
 export function SpeedClicker() {
-  const [timesClicked, setTimesClicked] = useState(0);
-  const [millisecondsInterval, setMillisecondsInterval] = useState<any>();
-  const [passedMilliseconds, setPassedMilliseconds] = useState(0);
+  const [isStarted, setIsStarted] = useState(false);
 
-  const { isStarted, setIsStarted } = useContext(AppContext);
+  const {
+    timesClicked,
+    setTimesClicked,
+    millisecondsInterval,
+    setMillisecondsInterval,
+    passedMilliseconds,
+    setPassedMilliseconds,
+  } = useContext(AppContext);
 
-  console.log(isStarted);
   function timeSet() {
     setPassedMilliseconds((prev) => prev + 1);
   }
 
   if (timesClicked >= 10) {
     clearInterval(millisecondsInterval);
-    return (
-      <Results
-        gameId={1}
-        passedMilliseconds={passedMilliseconds}
-        setTimesClicked={setTimesClicked}
-        setPassedMilliseconds={setPassedMilliseconds}
-      />
-    );
+    return <Results gameId={1} setIsStarted={setIsStarted} />;
   }
 
   if (isStarted === false) {
@@ -54,7 +50,7 @@ export function SpeedClicker() {
           Passed Seconds: {passedMilliseconds / 100}
         </p>
         <button
-          onClick={() => setTimesClicked((prev) => prev + 1)}
+          onClick={() => setTimesClicked(timesClicked + 1)}
           className="mt-36 w-60 h-60 bg-greenSclick rounded-full self-center active:bg-greenHead"></button>
       </div>
     );

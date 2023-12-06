@@ -16,13 +16,19 @@ export default function App() {
     }
   }, []);
 
+  const [timesClicked, setTimesClicked] = useState(0);
+  const [millisecondsInterval, setMillisecondsInterval] = useState<any>();
+  const [passedMilliseconds, setPassedMilliseconds] = useState(0);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isStarted, setIsStarted] = useState(false);
   const contextValues = {
     loggedIn,
     setLoggedIn,
-    isStarted,
-    setIsStarted,
+    millisecondsInterval,
+    setMillisecondsInterval,
+    passedMilliseconds,
+    setPassedMilliseconds,
+    timesClicked,
+    setTimesClicked,
   };
 
   return (

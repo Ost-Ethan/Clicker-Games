@@ -3,15 +3,13 @@ import { ScoreBoard } from './ScoreBoard';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from './AppContext';
 
-export function Results({
-  gameId,
-  passedMilliseconds,
-  setTimesClicked,
-  setPassedMilliseconds,
-}) {
-  const [bestTime, setBestTime] = useState();
+export function Results({ setIsStarted, gameId }) {
+  const [bestTime, setBestTime] = useState<number>();
 
-  const { loggedIn, setIsStarted } = useContext(AppContext);
+  const { setTimesClicked, passedMilliseconds, setPassedMilliseconds } =
+    useContext(AppContext);
+
+  const { loggedIn } = useContext(AppContext);
   useEffect(() => {
     async function handleScoreUpdate() {
       await fetch('/api/times', {
