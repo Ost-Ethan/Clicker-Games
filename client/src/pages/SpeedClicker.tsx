@@ -1,9 +1,13 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Results } from '../components/Results';
 import { AppContext } from '../components/AppContext';
 
 export function SpeedClicker() {
   const [isStarted, setIsStarted] = useState(false);
+
+  useEffect(() => {
+    setIsStarted(false);
+  }, []);
 
   const {
     timesClicked,

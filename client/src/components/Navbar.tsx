@@ -11,7 +11,7 @@ export function Navbar() {
   const location = useLocation();
   const [onLoginPage, setOnLoginPage] = useState(true);
 
-  const { loggedIn, setLoggedIn } = useContext(AppContext);
+  const { loggedIn, setLoggedIn, setTimesClicked } = useContext(AppContext);
   useEffect(() => {
     if (location.pathname != '/UserLogin' && location.pathname != '/Profile') {
       setOnLoginPage(false);
@@ -20,12 +20,16 @@ export function Navbar() {
     }
   }, [location.pathname]);
 
+  function resetStates() {
+    setTimesClicked(0);
+  }
+
   // There is scaling issues for mobile navbar when a user is logged in and their name is longer than 10 characters. Need to dynamically adjust username name to ...s after 10 characters.
   return (
     <div>
       <div className="NAVBAR-CONTAINER font-Arimo max-w-screen bg-gradient-to-b from-greenGrad from-20% to-blueGrad to-100% shadow-sm flex h-16 items-center">
         <div className="NAVBAR-ENTRIES-GAMELIST md:mt-2 ml-2 md:mb-2 text-center flex md:text-lg basis-1/2">
-          <Link to="/">
+          <Link onClick={() => resetStates()} to="/">
             <div className="CLICKER-GAMES-ENTRY flex flex-wrap mr-2 py-1 px-4 md:p-3 md:m-3 shadow-xl bg-yellowHead rounded-xl active:translate-y-0.5 active:translate-x-0.5">
               Clicker Games!
             </div>
