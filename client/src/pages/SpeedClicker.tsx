@@ -20,7 +20,13 @@ export function SpeedClicker() {
 
   if (timesClicked >= 10) {
     clearInterval(millisecondsInterval);
-    return <Results gameId={1} setIsStarted={setIsStarted} />;
+    return (
+      <Results
+        gameId={1}
+        setIsStarted={setIsStarted}
+        gameName={'SpeedClicker'}
+      />
+    );
   }
 
   if (isStarted === false) {
@@ -47,7 +53,8 @@ export function SpeedClicker() {
         <h1 className="mt-12 text-2xl">Speed Clicker!</h1>
         <p className="text-lg mt-4">Times Clicked: {timesClicked} / 10</p>
         <p className="text-xl mt-4">
-          Passed Seconds: {passedMilliseconds / 100}
+          Passed Seconds:{' '}
+          {passedMilliseconds ? passedMilliseconds / 100 : 'Error'}
         </p>
         <button
           onClick={() => setTimesClicked(timesClicked + 1)}

@@ -3,7 +3,7 @@ import { ScoreBoard } from './ScoreBoard';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from './AppContext';
 
-export function Results({ setIsStarted, gameId }) {
+export function Results({ setIsStarted, gameId, gameName }) {
   const [bestTime, setBestTime] = useState<number>();
 
   const { setTimesClicked, passedMilliseconds, setPassedMilliseconds } =
@@ -18,7 +18,7 @@ export function Results({ setIsStarted, gameId }) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
-        body: JSON.stringify({ gameId: 1, bestTime: passedMilliseconds }),
+        body: JSON.stringify({ gameId, bestTime: passedMilliseconds }),
       });
     }
 
@@ -34,6 +34,7 @@ export function Results({ setIsStarted, gameId }) {
     }
 
     async function handleGetBestScore() {
+      if (passedMilliseconds === undefined) return;
       const res = await fetch(`/api/user/${gameId}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +62,9 @@ export function Results({ setIsStarted, gameId }) {
       <div className="justify-center flex flex-wrap text-center select-none">
         <div className="mb-6 text-3xl font-semibold">Result:</div>
         <div className="basis-full mb-20 text-2xl italic">
-          {passedMilliseconds / 100} seconds!
+          {passedMilliseconds
+            ? `${passedMilliseconds / 100} seconds!`
+            : 'Disqualified...'}
         </div>
         <div className="basis-full">
           <button
@@ -93,7 +96,7 @@ export function Results({ setIsStarted, gameId }) {
         )}
       </div>
       <div className=" justify-center flex">
-        <ScoreBoard gameId="1" game="Speed Clicker" />
+        <ScoreBoard gameId={gameId} game={gameName} />
       </div>
     </div>
   );

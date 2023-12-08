@@ -16,7 +16,9 @@ export function HomePage() {
           </Link>
         </div>
         <div className="flex flex-wrap m-4  active:translate-y-0.5 active:translate-x-0.5">
-          <img src={quickDraw} alt="QuickDraw Game Button"></img>
+          <Link to={'/quickDraw'}>
+            <img src={quickDraw} alt="QuickDraw Game Button"></img>
+          </Link>
         </div>
       </div>
       <div className="w-screen flex justify-center mt-4  active:translate-y-0.5 active:translate-x-0.5">
