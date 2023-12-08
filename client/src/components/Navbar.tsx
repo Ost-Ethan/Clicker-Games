@@ -34,12 +34,12 @@ export function Navbar() {
               Clicker Games!
             </div>
           </Link>
-          <Link to="/SpeedClicker">
+          <Link onClick={() => resetStates()} to="/SpeedClicker">
             <div className="SPEED-CLICKER-ENTRY flex flex-wrap mr-2 px-4 py-1 md:p-3 md:m-3 shadow-xl bg-greenHead rounded-xl active:translate-y-0.5 active:translate-x-0.5">
               Speed Clicker
             </div>
           </Link>
-          <Link to="/QuickDraw">
+          <Link onClick={() => resetStates()} to="/QuickDraw">
             <div className="QUICKDRAW-ENTRY flex flex-wrap px-4 py-1 md:p-3 md:m-3 shadow-xl bg-redHead rounded-xl active:translate-y-0.5 active:translate-x-0.5">
               Quick Draw
             </div>

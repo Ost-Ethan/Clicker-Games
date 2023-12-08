@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Results } from '../components/Results';
+import { AppContext } from '../components/AppContext';
 
 export function QuickDraw() {
   const [isStarted, setIsStarted] = useState(false);
+
+  const { setPassedMilliseconds } = useContext(AppContext);
+  useEffect(() => {
+    setPassedMilliseconds(0);
+  });
 
   if (isStarted) {
     // GAME LOGIC will go here
