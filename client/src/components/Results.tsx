@@ -6,8 +6,12 @@ import { AppContext } from './AppContext';
 export function Results({ setIsStarted, gameId, gameName }) {
   const [bestTime, setBestTime] = useState<number>();
 
-  const { setTimesClicked, passedMilliseconds, setPassedMilliseconds } =
-    useContext(AppContext);
+  const {
+    setTimesClicked,
+    passedMilliseconds,
+    setPassedMilliseconds,
+    setLeftEarly,
+  } = useContext(AppContext);
 
   const { loggedIn } = useContext(AppContext);
   useEffect(() => {
@@ -72,6 +76,7 @@ export function Results({ setIsStarted, gameId, gameName }) {
               setTimesClicked(0);
               setIsStarted(false);
               setPassedMilliseconds(0);
+              setLeftEarly(false);
             }}
             className="text-lg py-6 px-4 m-2 bg-greenHead rounded-lg shadow-xl select-none  active:translate-y-0.5 active:translate-x-0.5">
             Play Again!

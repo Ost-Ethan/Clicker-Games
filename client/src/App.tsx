@@ -20,10 +20,16 @@ export default function App() {
   const [millisecondsInterval, setMillisecondsInterval] = useState<any>();
   const [passedMilliseconds, setPassedMilliseconds] = useState(0);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [leftEarly, setLeftEarly] = useState(false);
+  const [quickDrawFinished, setQuickDrawFinished] = useState(false);
   const contextValues = {
     loggedIn,
     setLoggedIn,
     millisecondsInterval,
+    leftEarly,
+    quickDrawFinished,
+    setQuickDrawFinished,
+    setLeftEarly,
     setMillisecondsInterval,
     passedMilliseconds,
     setPassedMilliseconds,
