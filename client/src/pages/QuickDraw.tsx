@@ -1,28 +1,38 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { AppContext } from '../components/AppContext';
 import { Results } from '../components/Results';
 
 export function QuickDraw() {
   const [isStarted, setIsStarted] = useState(false);
-  const [startDelayTimerIntervalKey, setStartDelayTimerIntervalKey] =
-    useState<any>();
   const [delayTimer, setDelayTimer] = useState(0);
   const [drawState, setDrawState] = useState(false);
   const [delayInt, setDelayInt] = useState<any>();
 
+  const startDelayTimerIntervalKey = useRef<any>(null);
+  const millisecondsInterval = useRef<any>(null);
   const {
     setPassedMilliseconds,
     leftEarly,
     setLeftEarly,
-    millisecondsInterval,
     quickDrawFinished,
     setQuickDrawFinished,
   } = useContext(AppContext);
+
   useEffect(() => {
     setPassedMilliseconds(0);
     setIsStarted(false);
     setLeftEarly(false);
   }, [setLeftEarly, setPassedMilliseconds]);
+
+  if (quickDrawFinished) {
+    clearInterval(millisecondsInterval.current);
+    return (
+      <Results
+        setIsStarted={setIsStarted}
+        gameId={2}
+        gameName={'QuickDraw'}></Results>
+    );
+  }
 
   //Defining a function that will give me a random number between 2 numbers.
   function getRandomInt(min: number, max: number) {
@@ -33,35 +43,28 @@ export function QuickDraw() {
 
   if (delayInt) {
     if (delayTimer === delayInt * 100) {
-      clearInterval(startDelayTimerIntervalKey);
+      clearInterval(startDelayTimerIntervalKey.current);
       setDelayInt(undefined);
       console.log(`This is where ${delayTimer} and ${delayInt * 100} match!`);
       setDrawState(true);
+      clearInterval(millisecondsInterval.current);
+      millisecondsInterval.current = setInterval(() => {
+        setPassedMilliseconds((prev) => prev + 1);
+      });
+      console.log(millisecondsInterval.current);
     }
   }
 
   function handleGameStart() {
     // Get a random number between 2 and 5 for delay timer.
     console.log(delayInt);
-    setStartDelayTimerIntervalKey(
-      setInterval(() => {
-        setDelayTimer((prev) => prev + 1);
-      })
-    );
+    startDelayTimerIntervalKey.current = setInterval(() => {
+      setDelayTimer((prev) => prev + 1);
+    });
   }
 
   // If the user exits the start point before the game starts, display the results screen with a DQ message.
   if (leftEarly) {
-    return (
-      <Results
-        setIsStarted={setIsStarted}
-        gameId={2}
-        gameName={'QuickDraw'}></Results>
-    );
-  }
-
-  if (quickDrawFinished) {
-    clearInterval(millisecondsInterval);
     return (
       <Results
         setIsStarted={setIsStarted}
@@ -79,8 +82,7 @@ export function QuickDraw() {
           <button
             onMouseOver={() => handleGameStart()}
             onMouseOut={() => {
-              clearInterval(startDelayTimerIntervalKey),
-                setStartDelayTimerIntervalKey(0),
+              clearInterval(startDelayTimerIntervalKey.current),
                 setDelayTimer(0);
               if (!drawState) {
                 setLeftEarly(true);
@@ -93,7 +95,6 @@ export function QuickDraw() {
             <button
               onMouseOver={() => {
                 console.log('hovered finished button');
-                clearInterval(millisecondsInterval);
                 setQuickDrawFinished(true);
               }}
               className="bg-redHead self-end mr-14 p-24 rounded-full"></button>
@@ -117,6 +118,7 @@ export function QuickDraw() {
         onClick={() => {
           setIsStarted(true);
           setDelayInt(getRandomInt(3, 8));
+          setDrawState(false);
         }}
         className="text-xl m-3 mt-6 px-16 py-4 bg-redHead rounded-2xl shadow-xl active:translate-y-0.5 active:translate-x-0.5">
         Start!

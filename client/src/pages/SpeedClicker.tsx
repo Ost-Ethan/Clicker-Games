@@ -45,6 +45,7 @@ export function SpeedClicker() {
           onClick={() => {
             setIsStarted(true);
             setMillisecondsInterval(setInterval(timeSet));
+            console.log('do onClick events fire twice in strict mode?');
           }}
           className="text-xl m-3 mt-6 px-16 py-4 bg-greenSclick rounded-2xl shadow-xl active:translate-y-0.5 active:translate-x-0.5">
           Start!

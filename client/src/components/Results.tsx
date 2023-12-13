@@ -11,6 +11,7 @@ export function Results({ setIsStarted, gameId, gameName }) {
     passedMilliseconds,
     setPassedMilliseconds,
     setLeftEarly,
+    setQuickDrawFinished,
   } = useContext(AppContext);
 
   const { loggedIn } = useContext(AppContext);
@@ -77,6 +78,7 @@ export function Results({ setIsStarted, gameId, gameName }) {
               setIsStarted(false);
               setPassedMilliseconds(0);
               setLeftEarly(false);
+              setQuickDrawFinished(false);
             }}
             className="text-lg py-6 px-4 m-2 bg-greenHead rounded-lg shadow-xl select-none  active:translate-y-0.5 active:translate-x-0.5">
             Play Again!
