@@ -22,7 +22,8 @@ export function QuickDraw() {
     setPassedMilliseconds(0);
     setIsStarted(false);
     setLeftEarly(false);
-  }, [setLeftEarly, setPassedMilliseconds]);
+    setQuickDrawFinished(false);
+  }, [setLeftEarly, setQuickDrawFinished, setPassedMilliseconds]);
 
   if (quickDrawFinished) {
     clearInterval(millisecondsInterval.current);

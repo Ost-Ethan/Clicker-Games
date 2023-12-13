@@ -34,7 +34,7 @@ export function Results({ setIsStarted, gameId, gameName }) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
-        body: JSON.stringify({ gameId: 1, bestTime: passedMilliseconds }),
+        body: JSON.stringify({ gameId, bestTime: passedMilliseconds }),
       });
     }
 
@@ -92,7 +92,7 @@ export function Results({ setIsStarted, gameId, gameName }) {
         {loggedIn ? (
           <>
             <div className="mt-20 max-w-s select-none text-lg">
-              Your best time for SpeedClicker is
+              Your best time for {gameName} is
               {bestTime ? ` ${bestTime / 100} seconds!` : 'Loading...'}
             </div>
           </>
