@@ -10,12 +10,19 @@ export function QuickDraw() {
 
   const startDelayTimerIntervalKey = useRef<any>(null);
   const millisecondsInterval = useRef<any>(null);
+
+  const startPositionRandomNumber = useRef(0);
+  const endPostionRandomNumber = useRef(getRandomInt(1, 3));
+  const startStyling = useRef('');
+  const endStyling = useRef('');
+
   const {
     setPassedMilliseconds,
     leftEarly,
     setLeftEarly,
     quickDrawFinished,
     setQuickDrawFinished,
+    passedMilliseconds,
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -23,7 +30,60 @@ export function QuickDraw() {
     setIsStarted(false);
     setLeftEarly(false);
     setQuickDrawFinished(false);
+    setDrawState(false);
+
+    return () => {
+      // This clears the interval for the millisecond timer when the user leaves the page after starting the game.
+      clearInterval(millisecondsInterval.current);
+    };
   }, [setLeftEarly, setQuickDrawFinished, setPassedMilliseconds]);
+
+  //Defining a function that will give me a random number between 2 numbers.
+  function getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  function generatePositions() {
+    startPositionRandomNumber.current = getRandomInt(1, 4);
+    switch (startPositionRandomNumber.current) {
+      case 1:
+        startStyling.current = 'top-24';
+        break;
+      case 2:
+        startStyling.current = 'top-40';
+        break;
+      case 3:
+        startStyling.current = 'top-80';
+        break;
+      default:
+        startStyling.current = 'top-24 def';
+    }
+
+    endPostionRandomNumber.current = getRandomInt(1, 4);
+    switch (endPostionRandomNumber.current) {
+      case 1:
+        endStyling.current = 'top-24';
+        break;
+      case 2:
+        endStyling.current = 'top-40';
+        break;
+      case 3:
+        endStyling.current = 'top-80';
+        break;
+      default:
+        endStyling.current = 'top-24 def';
+    }
+    console.log('end styling ', endStyling.current);
+    console.log('start styling', startStyling.current);
+  }
+
+  function handleGameStart() {
+    startDelayTimerIntervalKey.current = setInterval(() => {
+      setDelayTimer((prev) => prev + 1);
+    });
+  }
 
   if (quickDrawFinished) {
     clearInterval(millisecondsInterval.current);
@@ -35,33 +95,16 @@ export function QuickDraw() {
     );
   }
 
-  //Defining a function that will give me a random number between 2 numbers.
-  function getRandomInt(min: number, max: number) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min);
-  }
-
   if (delayInt) {
     if (delayTimer === delayInt * 100) {
       clearInterval(startDelayTimerIntervalKey.current);
       setDelayInt(undefined);
-      console.log(`This is where ${delayTimer} and ${delayInt * 100} match!`);
       setDrawState(true);
       clearInterval(millisecondsInterval.current);
       millisecondsInterval.current = setInterval(() => {
         setPassedMilliseconds((prev) => prev + 1);
       });
-      console.log(millisecondsInterval.current);
     }
-  }
-
-  function handleGameStart() {
-    // Get a random number between 2 and 5 for delay timer.
-    console.log(delayInt);
-    startDelayTimerIntervalKey.current = setInterval(() => {
-      setDelayTimer((prev) => prev + 1);
-    });
   }
 
   // If the user exits the start point before the game starts, display the results screen with a DQ message.
@@ -77,8 +120,9 @@ export function QuickDraw() {
   if (isStarted) {
     // GAME LOGIC will go here
     return (
-      <div className="conatiner flex justify-between">
-        <div className="flex flex-col flex-wrap justify-center">
+      <div className="conatiner flex justify-evenly content-baseline relative">
+        <div
+          className={`relative flex flex-col flex-wrap justify-center ${startStyling.current}`}>
           <p className="self-center">Start</p>
           <button
             onMouseOver={() => handleGameStart()}
@@ -91,14 +135,28 @@ export function QuickDraw() {
             }}
             className="bg-redHead self-center p-24 rounded-full"></button>
         </div>
-        <div className="flex">
+        <div className="flex flex-wrap text-center justify-center content-center p-4 mr-16">
+          <p className="w-40 text-clip basis-full">
+            Time:{' '}
+            {passedMilliseconds
+              ? `${passedMilliseconds / 100} Seconds`
+              : `Not Started`}
+          </p>
+          <p className="flex mt-24 mr-16 text-xl justify-center content-center">
+            {drawState ? 'DRAW! ' : 'Ready...'}
+          </p>
+        </div>
+        <div
+          className={`relative flex flex-col flex-wrap justify-center mr-14 w-24 ${endStyling.current}`}>
           {drawState && (
-            <button
-              onMouseOver={() => {
-                console.log('hovered finished button');
-                setQuickDrawFinished(true);
-              }}
-              className="bg-redHead self-end mr-14 p-24 rounded-full"></button>
+            <>
+              <p className="self-center mr-14"> Move Here!</p>
+              <button
+                onMouseOver={() => {
+                  setQuickDrawFinished(true);
+                }}
+                className="bg-redHead self-end p-24 mr-14 rounded-full"></button>
+            </>
           )}
         </div>
       </div>
@@ -120,6 +178,7 @@ export function QuickDraw() {
           setIsStarted(true);
           setDelayInt(getRandomInt(3, 8));
           setDrawState(false);
+          generatePositions();
         }}
         className="text-xl m-3 mt-6 px-16 py-4 bg-redHead rounded-2xl shadow-xl active:translate-y-0.5 active:translate-x-0.5">
         Start!
