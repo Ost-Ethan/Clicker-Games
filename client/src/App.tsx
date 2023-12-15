@@ -7,6 +7,7 @@ import { UserLogin } from './pages/UserLogin';
 import { useEffect, useState } from 'react';
 import { Profile } from './pages/Profile';
 import { QuickDraw } from './pages/QuickDraw';
+import { AppContext } from './components/AppContext';
 
 export default function App() {
   useEffect(() => {
@@ -15,25 +16,38 @@ export default function App() {
     }
   }, []);
 
+  const [timesClicked, setTimesClicked] = useState(0);
+  const [millisecondsInterval, setMillisecondsInterval] = useState<any>();
+  const [passedMilliseconds, setPassedMilliseconds] = useState(0);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [leftEarly, setLeftEarly] = useState(false);
+  const [quickDrawFinished, setQuickDrawFinished] = useState(false);
+  const contextValues = {
+    loggedIn,
+    setLoggedIn,
+    millisecondsInterval,
+    leftEarly,
+    quickDrawFinished,
+    setQuickDrawFinished,
+    setLeftEarly,
+    setMillisecondsInterval,
+    passedMilliseconds,
+    setPassedMilliseconds,
+    timesClicked,
+    setTimesClicked,
+  };
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={<Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}>
-        <Route index element={<HomePage />} />
-        <Route
-          path="SpeedClicker"
-          element={<SpeedClicker loggedIn={loggedIn} />}
-        />
-        <Route path="Profile" element={<Profile loggedIn={loggedIn} />} />
-        <Route
-          path="UserLogin"
-          element={<UserLogin setLoggedIn={setLoggedIn} loggedIn={loggedIn} />}
-        />
-        <Route path="QuickDraw" element={<QuickDraw />} />
-      </Route>
-    </Routes>
+    <AppContext.Provider value={contextValues}>
+      <Routes>
+        <Route path="/" element={<Navbar />}>
+          <Route index element={<HomePage />} />
+          <Route path="SpeedClicker" element={<SpeedClicker />} />
+          <Route path="Profile" element={<Profile />} />
+          <Route path="UserLogin" element={<UserLogin />} />
+          <Route path="QuickDraw" element={<QuickDraw />} />
+        </Route>
+      </Routes>
+    </AppContext.Provider>
   );
 }

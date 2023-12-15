@@ -1,7 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { LogInForm } from '../components/LogInForm';
+import { useContext } from 'react';
+import { AppContext } from '../components/AppContext';
 
-export function UserLogin({ setLoggedIn, loggedIn }) {
+export function UserLogin() {
+  const { loggedIn, setLoggedIn } = useContext(AppContext);
   const navigate = useNavigate();
 
   async function handleSignUp(userInfo) {

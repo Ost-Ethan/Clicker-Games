@@ -45,7 +45,7 @@ app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
 
-// Get all time entries from the times table with the given gameId. This will be used to generate the leaderboard when a game is finished.
+// Get time entries from the times table with the given gameId. This will be used to generate the leaderboard when a game is finished.
 app.get('/api/times/:gameId', async (req, res, next) => {
   try {
     const { gameId } = req.params;

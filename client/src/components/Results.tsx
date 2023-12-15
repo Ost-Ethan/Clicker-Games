@@ -1,17 +1,20 @@
 import { Link } from 'react-router-dom';
 import { ScoreBoard } from './ScoreBoard';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AppContext } from './AppContext';
 
-export function Results({
-  gameId,
-  loggedIn,
-  time,
-  setTimesClicked,
-  setIsStarted,
-  setPassedMilliseconds,
-}) {
-  const [bestTime, setBestTime] = useState();
+export function Results({ setIsStarted, gameId, gameName }) {
+  const [bestTime, setBestTime] = useState<number>();
 
+  const {
+    setTimesClicked,
+    passedMilliseconds,
+    setPassedMilliseconds,
+    setLeftEarly,
+    setQuickDrawFinished,
+  } = useContext(AppContext);
+
+  const { loggedIn } = useContext(AppContext);
   useEffect(() => {
     async function handleScoreUpdate() {
       await fetch('/api/times', {
@@ -20,7 +23,7 @@ export function Results({
           'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
-        body: JSON.stringify({ gameId: 1, bestTime: time }),
+        body: JSON.stringify({ gameId, bestTime: passedMilliseconds }),
       });
     }
 
@@ -31,11 +34,12 @@ export function Results({
           'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
-        body: JSON.stringify({ gameId: 1, bestTime: time }),
+        body: JSON.stringify({ gameId, bestTime: passedMilliseconds }),
       });
     }
 
     async function handleGetBestScore() {
+      if (passedMilliseconds === undefined) return;
       const res = await fetch(`/api/user/${gameId}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -45,11 +49,11 @@ export function Results({
       const response = await res.json();
       if (!response[0]) {
         handleScoreSubmit();
-        setBestTime(time);
-      } else if (response[0].bestTime > time) {
+        setBestTime(passedMilliseconds);
+      } else if (response[0].bestTime > passedMilliseconds) {
         handleScoreUpdate();
-        setBestTime(time);
-      } else if (response[0].bestTime < time) {
+        setBestTime(passedMilliseconds);
+      } else if (response[0].bestTime < passedMilliseconds) {
         setBestTime(response[0].bestTime);
       }
     }
@@ -63,7 +67,9 @@ export function Results({
       <div className="justify-center flex flex-wrap text-center select-none">
         <div className="mb-6 text-3xl font-semibold">Result:</div>
         <div className="basis-full mb-20 text-2xl italic">
-          {time / 100} seconds!
+          {passedMilliseconds
+            ? `${passedMilliseconds / 100} seconds!`
+            : 'Disqualified...'}
         </div>
         <div className="basis-full">
           <button
@@ -71,6 +77,8 @@ export function Results({
               setTimesClicked(0);
               setIsStarted(false);
               setPassedMilliseconds(0);
+              setLeftEarly(false);
+              setQuickDrawFinished(false);
             }}
             className="text-lg py-6 px-4 m-2 bg-greenHead rounded-lg shadow-xl select-none  active:translate-y-0.5 active:translate-x-0.5">
             Play Again!
@@ -84,7 +92,7 @@ export function Results({
         {loggedIn ? (
           <>
             <div className="mt-20 max-w-s select-none text-lg">
-              Your best time for SpeedClicker is
+              Your best time for {gameName} is
               {bestTime ? ` ${bestTime / 100} seconds!` : 'Loading...'}
             </div>
           </>
@@ -95,7 +103,7 @@ export function Results({
         )}
       </div>
       <div className=" justify-center flex">
-        <ScoreBoard gameId="1" game="Speed Clicker" />
+        <ScoreBoard gameId={gameId} game={gameName} />
       </div>
     </div>
   );

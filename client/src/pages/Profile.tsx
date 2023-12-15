@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 import { UserTimesTable } from '../components/UserTimesTable';
 import blankUser from '../assets/Portrait_Placeholder.png';
+import { AppContext } from '../components/AppContext';
+import { useContext } from 'react';
 
-export function Profile({ loggedIn }) {
+export function Profile() {
+  const { loggedIn } = useContext(AppContext);
+
   if (!loggedIn) {
     return (
       <div className="font-Arimo w-screen flex flex-col items-center">
